@@ -5,17 +5,21 @@ use diagnostics;
 
 require Exporter;
 use AutoLoader qw(AUTOLOAD);
-use vars qw / $VERSION @ISA %EXPORT_TAGS @EXPORT_OK /;
+use vars qw / $VERSION @ISA %EXPORT_TAGS @EXPORT @EXPORT_OK /;
 
 @ISA = qw(Exporter);
 
-%EXPORT_TAGS = ( encrypt PGP_ERR_SUCCESS PGP_ERR_FAIL PGP_ERR_BAD_OPTIONS PGP_ERR_MISSING_KEY PGP_ERR_MISSING_TEXT );
+%EXPORT_TAGS = ( );
+
+@EXPORT = qw ( encrypt PGP_ERR_SUCCESS PGP_ERR_FAIL PGP_ERR_BAD_OPTIONS PGP_ERR_MISSING_KEY PGP_ERR_MISSING_TEXT );
 
 @EXPORT_OK = ();
 
 use IPC::Open3;
 
-$VERSION = '0.02';
+$VERSION = '0.03';
+
+1;
 
 sub PGP_ERR_SUCCESS { 0 }
 
@@ -26,8 +30,6 @@ sub PGP_ERR_BAD_OPTIONS { 2 }
 sub PGP_ERR_MISSING_KEY { 3 }
 
 sub PGP_ERR_MISSING_TEXT { 4 }
-
-1;
 
 # Program: encrypt
 # Author : James Briggs
@@ -54,7 +56,7 @@ sub encrypt {
    return ('', '', PGP_ERR_MISSING_TEXT) if not defined $plaintext or $plaintext eq '';
 
    # set explicit path to PGP binary
-   my $pgp = '/usr/bin/pgp';
+   my $pgp = '/usr/local/bin/pgp';
 
    $ENV{'PGPPATH'} = '/.pgp';
 

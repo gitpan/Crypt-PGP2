@@ -5,7 +5,7 @@ $ENV{'PATH'} = '';
 use strict;      # must scope all symbols
 use diagnostics; # lint checking and verbose warnings
 
-my $watch_for_sigpipe = 0;
+my $pipe_failed = 0;
 
 $SIG{'PIPE'} = &watch_for_sigpipe;
 
@@ -21,7 +21,7 @@ use Crypt::PGP2;
       print "PGP error: $error\n";
    }
 
-   print "Likely SIGPIPE caught in IPC::Open3." if $watch_for_sigpipe;
+   print "Likely SIGPIPE caught in IPC::Open3." if $pipe_failed;
 
 sub watch_for_sigpipe {
    $pipe_failed++;
